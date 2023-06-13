@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tom.mapper.BlogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.tom.entity.Blog">
+        <id column="id" property="id" />
+        <result column="blogName" property="blogName" />
+        <result column="label" property="label" />
+        <result column="comeForm" property="comeForm" />
+        <result column="introduction" property="introduction" />
+        <result column="blogContent" property="blogContent" />
+        <result column="url" property="url" />
+        <result column="view" property="view" />
+        <result column="version" property="version" />
+        <result column="deleted" property="deleted" />
+        <result column="create_time" property="create_time" />
+        <result column="update_time" property="update_time" />
+    </resultMap>
+
+    <select id="queryAll" resultType="com.tom.entity.Blog">
+        select * from blog
+    </select>
+
+</mapper>
