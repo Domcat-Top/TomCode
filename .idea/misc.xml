@@ -11,6 +11,7 @@
         <option value="$PROJECT_DIR$/ScheduledModule/pom.xml" />
         <option value="$PROJECT_DIR$/RabbitMQTest/pom.xml" />
         <option value="$PROJECT_DIR$/RabbitMQTest/ProviderTest/pom.xml" />
+        <option value="$PROJECT_DIR$/RepTileTest/pom.xml" />
       </list>
     </option>
   </component>
