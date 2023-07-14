@@ -10,9 +10,6 @@ import java.util.Date;
 import java.io.Serializable;
 
 /**
- * <p>
- * 
- * </p>
  *
  * @author tom
  * @since 2023-06-13

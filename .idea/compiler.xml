@@ -7,8 +7,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="ProviderTest" />
         <module name="IPUtils" />
         <module name="JWT-Utils" />
+        <module name="ScheduledModule" />
         <module name="TestAop" />
         <module name="MultipleEnvironment" />
         <module name="PageHelperTest" />
@@ -19,6 +21,10 @@
       <module name="JWT-Utils" target="1.8" />
       <module name="MultipleEnvironment" target="1.8" />
       <module name="PageHelperTest" target="1.8" />
+      <module name="ProviderTest" target="1.8" />
+      <module name="RabbitMQTest" target="1.5" />
+      <module name="ReceiverTest" target="1.8" />
+      <module name="ScheduledModule" target="1.8" />
       <module name="TestAop" target="1.8" />
     </bytecodeTargetLevel>
   </component>
@@ -28,6 +34,9 @@
       <module name="JWT-Utils" options="-parameters" />
       <module name="MultipleEnvironment" options="-parameters" />
       <module name="PageHelperTest" options="-parameters" />
+      <module name="ProviderTest" options="-parameters" />
+      <module name="ReceiverTest" options="-parameters" />
+      <module name="ScheduledModule" options="-parameters" />
       <module name="TestAop" options="-parameters" />
     </option>
   </component>

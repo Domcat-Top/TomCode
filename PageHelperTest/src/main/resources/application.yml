@@ -12,6 +12,11 @@ spring:
 
 mybatis-plus:
   mapper-locations: classpath:mybatis/*.xml
+  configuration:
+    # 关闭驼峰和下划线互转
+    map-underscore-to-camel-case: false
+    #开启sql日志
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 
 

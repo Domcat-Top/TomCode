@@ -4,7 +4,6 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import lombok.val;
 
 import java.util.Calendar;
 import java.util.Map;
@@ -32,7 +31,7 @@ public class JwtUtils {
 
         JWTCreator.Builder builder = JWT.create();
 
-        // 这里的简化写法是真的牛
+        // 简化写法
         map.forEach((k, v) -> {
             builder.withClaim(k, v);
         });
