@@ -10,6 +10,7 @@ import org.jsoup.select.Elements;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * @author: Tom
@@ -38,7 +39,7 @@ public class JsoupTest {
         System.out.println(response.header("Content-Type"));
         // 响应体
         System.out.println(response.body());
-
+        // 随便加点
         String html = response.body();
         // Jsoup 解析HTML
         Document dom = Jsoup.parse(html);
@@ -65,7 +66,7 @@ public class JsoupTest {
             // 取出写入的字节
             byte[] bytes = imgResponse.bodyAsBytes();
             // 输出到对应文件夹下
-            IOUtils.write(bytes, new FileOutputStream(new File("e://Test//picture//" + filename)));
+            IOUtils.write(bytes, new FileOutputStream("e://Test//picture//" + filename));
         }
     }
 
