@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.tom.utils.JwtUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -23,6 +24,7 @@ class JwtUtilsApplicationTests {
 		Calendar instance = Calendar.getInstance();
 		instance.add(Calendar.SECOND, 200);
 		String token = JWT.create()
+				// 也就意味着，请求头里面也是可以保持有具体的参数的
 				// 需要的是一个Map作为头，可以不写，也就是说这一行可以删掉
 				.withHeader(map)
 				// 这里是payload，放的是用的信息，比如头像啥的
@@ -48,6 +50,15 @@ class JwtUtilsApplicationTests {
 		// 获取用这种方式--里面是map的存储形式
 		System.out.println(verify.getClaims().get("username").asString());
 		System.out.println(verify.getClaims().get("password").asInt());
+	}
+
+	/**
+	 * 工具类的调用
+	 */
+	@Test
+	void test03 () {
+		String token = JwtUtils.getToken(null);
+		System.out.println(token);
 	}
 }
 

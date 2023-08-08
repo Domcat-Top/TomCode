@@ -7,10 +7,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 
 /**
  * @author: Tom
@@ -19,7 +16,7 @@ import java.io.OutputStream;
  */
 public class JsoupTest {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         // Jsoup 模拟浏览器发起请求
         String website = "http://dou.yuanmazg.com";
 
@@ -39,7 +36,9 @@ public class JsoupTest {
         System.out.println(response.header("Content-Type"));
         // 响应体
         System.out.println(response.body());
-        // 随便加点
+
+
+        // 从响应体中拿到html部分
         String html = response.body();
         // Jsoup 解析HTML
         Document dom = Jsoup.parse(html);
@@ -48,14 +47,16 @@ public class JsoupTest {
         Elements select = dom.select("#pic-detail > div > div.col-sm-9 > div.page-content > a > img");
         // 获取单个
         for (Element element : select) {
-            // 取出相应数据
+            // 取出相应数据---这个是当前标签下的data-original属性
             String imgUrl = element.attr("data-original");
+            // 真实网站的图片URL一般都是website + imgUrl
             String realUrl = website + imgUrl;
             int i = imgUrl.lastIndexOf("/");
             String filename = imgUrl.substring(i + 1);
 
             System.out.println(filename);
             System.out.println(realUrl);
+
             // 下载到 imgResponse 对象里面
             Connection.Response imgResponse = Jsoup.connect(realUrl)
                     .ignoreContentType(true)

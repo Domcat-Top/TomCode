@@ -7,7 +7,6 @@
       <module fileurl="file://$PROJECT_DIR$/MultipleEnvironment/MultipleEnvironment.iml" filepath="$PROJECT_DIR$/MultipleEnvironment/MultipleEnvironment.iml" />
       <module fileurl="file://$PROJECT_DIR$/PageHelperTest/PageHelperTest.iml" filepath="$PROJECT_DIR$/PageHelperTest/PageHelperTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/RabbitMQTest/ProviderTest/ProviderTest.iml" filepath="$PROJECT_DIR$/RabbitMQTest/ProviderTest/ProviderTest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/RabbitMQTest/RabbitMQTest.iml" filepath="$PROJECT_DIR$/RabbitMQTest/RabbitMQTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/RepTileTest/RepTileTest.iml" filepath="$PROJECT_DIR$/RepTileTest/RepTileTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/ScheduledModule/ScheduledModule.iml" filepath="$PROJECT_DIR$/ScheduledModule/ScheduledModule.iml" />
       <module fileurl="file://$PROJECT_DIR$/TestAop/TestAop.iml" filepath="$PROJECT_DIR$/TestAop/TestAop.iml" />

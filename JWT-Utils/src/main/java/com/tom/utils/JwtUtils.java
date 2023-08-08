@@ -3,6 +3,7 @@ package com.tom.utils;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
 import java.util.Calendar;
@@ -11,7 +12,7 @@ import java.util.Map;
 /**
  * @author: Tom
  * @date: 2023/6/12 14:33
- * @description: 对生成Token和解析Token进行封装
+ * @description: 对生成Token和解析Token进行封装--详情见test测试类里面的调用
  */
 public class JwtUtils {
 
@@ -20,7 +21,7 @@ public class JwtUtils {
 
     /**
      * 生成Token的方法
-     * @param map 外部需要放入到payload的内容
+     * @param map 外部需要放入到payload的内容--比如：用户名、邮箱之类的
      * @return 生成好的token
      */
     public static String getToken(Map<String, String> map) {
@@ -31,13 +32,15 @@ public class JwtUtils {
 
         JWTCreator.Builder builder = JWT.create();
 
-        // 简化写法
-        map.forEach((k, v) -> {
-            builder.withClaim(k, v);
-        });
+        if(null != map) {
+            map.forEach((k, v) -> {
+                builder.withClaim(k, v);
+            });
+        }
 
         // 指定令牌的过期时间
         String token = builder.withExpiresAt(instance.getTime())
+                // 选择加密算法
                 .sign(Algorithm.HMAC256(SIGN));
         return token;
     }
@@ -49,7 +52,7 @@ public class JwtUtils {
      * @param token 外部传入的token
      */
     public static DecodedJWT verify(String token) {
-        return JWT.require(Algorithm.HMAC256(SIGN)).build().verify(token);
+                return JWT.require(Algorithm.HMAC256(SIGN)).build().verify(token);
     }
 
 
