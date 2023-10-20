@@ -10,6 +10,8 @@
       <module fileurl="file://$PROJECT_DIR$/RepTileTest/RepTileTest.iml" filepath="$PROJECT_DIR$/RepTileTest/RepTileTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/ScheduledModule/ScheduledModule.iml" filepath="$PROJECT_DIR$/ScheduledModule/ScheduledModule.iml" />
       <module fileurl="file://$PROJECT_DIR$/TestAop/TestAop.iml" filepath="$PROJECT_DIR$/TestAop/TestAop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TestModule/TestModule.iml" filepath="$PROJECT_DIR$/TestModule/TestModule.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TestWebSocket/TestWebSocket.iml" filepath="$PROJECT_DIR$/TestWebSocket/TestWebSocket.iml" />
       <module fileurl="file://$PROJECT_DIR$/TomCode.iml" filepath="$PROJECT_DIR$/TomCode.iml" />
     </modules>
   </component>

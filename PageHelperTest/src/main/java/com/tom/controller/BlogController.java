@@ -41,7 +41,7 @@ public class BlogController {
      */
     @GetMapping("/wrapper")
     public String testWrapper() {
-        // 这个不能简写，不能写为继承的写法，他底层貌似是独立封装的，子类没有全部继承自父类
+        // 查询和增删改都不通用，涉及到事务相关的操作
         QueryWrapper<Blog> queryWrapper = new QueryWrapper();
         queryWrapper.orderByDesc("id");
         PageHelper.startPage(1, 2);

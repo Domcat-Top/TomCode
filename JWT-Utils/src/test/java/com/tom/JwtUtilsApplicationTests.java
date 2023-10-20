@@ -5,6 +5,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.tom.utils.JwtUtils;
+import jdk.nashorn.internal.parser.Parser;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -53,12 +54,17 @@ class JwtUtilsApplicationTests {
 	}
 
 	/**
-	 * 工具类的调用
+	 * 工具类的调用测试
 	 */
 	@Test
 	void test03 () {
-		String token = JwtUtils.getToken(null);
-		System.out.println(token);
+		Map<String, String> map = new HashMap<>();
+		map.put("tom", "111");
+
+		String token = JwtUtils.getToken(map);
+
+		DecodedJWT verify = JwtUtils.verify(token);
+		System.out.println(Integer.parseInt(verify.getClaims().get("tom").asString()));
 	}
 }
 
