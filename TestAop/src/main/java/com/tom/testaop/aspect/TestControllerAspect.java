@@ -24,6 +24,9 @@ public class TestControllerAspect {
 
     }
 
+    /**
+     * 监听特定的某个方法
+     */
     @After(value = "execution(* com.tom.testaop.controller.TestController.test())")
     private void aspectSpecialMethod() {
         System.out.println("监听了test方法，方法执行之后出现");

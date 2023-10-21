@@ -52,7 +52,7 @@ public class JwtUtils {
      * @param token 外部传入的token
      */
     public static DecodedJWT verify(String token) {
-                return JWT.require(Algorithm.HMAC256(SIGN)).build().verify(token);
+        return JWT.require(Algorithm.HMAC256(SIGN)).build().verify(token);
     }
 
 
