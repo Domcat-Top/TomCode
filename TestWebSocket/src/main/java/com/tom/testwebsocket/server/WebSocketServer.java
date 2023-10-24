@@ -1,186 +1,65 @@
 package com.tom.testwebsocket.server;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import lombok.extern.log4j.Log4j;
-import org.apache.commons.logging.LogFactory;
-import org.slf4j.Logger;
+import com.alibaba.fastjson2.JSON;
+import com.tom.testwebsocket.pojo.TestPojo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import javax.websocket.*;
-import javax.websocket.server.PathParam;
+import javax.websocket.OnClose;
+import javax.websocket.OnMessage;
+import javax.websocket.OnOpen;
+import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 /**
  * @author: Tom
- * @date: 2023/10/21 13:30
- * @description: 具体的实现类，这个之所以会被注册，是因为注解： @ServerEndpoint
+ * @date: 2023/10/24 14:10
+ * @description:
  */
 @Component
-@Log4j
-@ServerEndpoint("/websocket/{sid")
+// 定义websocket服务器端，它的功能主要是将目前的类定义成一个websocket服务器端。
+// 注解的值将被用于监听用户连接的终端访问URL地址
+@ServerEndpoint("/websocket")
+@Slf4j
 public class WebSocketServer {
 
-    /**
-     * 静态变量，用来记录当前在线连接数，线程安全的类。
-     */
-    private static AtomicInteger onlineSessionClientCount = new AtomicInteger(0);
-
-    /**
-     * 存放所有在线的客户端
-     */
-    private static Map<String, Session> onlineSessionClientMap = new ConcurrentHashMap<>();
-
-    /**
-     * 连接sid和连接会话
-     */
-    private String sid;
+    //实例一个session，这个session是websocket的session
     private Session session;
 
-    /**
-     * 连接建立成功调用的方法。由前端<code>new WebSocket</code>触发
-     *
-     * @param sid     每次页面建立连接时传入到服务端的id，比如用户id等。可以自定义。
-     * @param session 与某个客户端的连接会话，需要通过它来给客户端发送消息
-     */
+    //存放websocket的集合（本次demo不会用到，聊天室的demo会用到）
+    private static CopyOnWriteArraySet<WebSocketServer> webSocketSet = new CopyOnWriteArraySet<>();
+
+    //前端请求时一个websocket时
     @OnOpen
-    public void onOpen(@PathParam("sid") String sid, Session session) {
-        /**
-         * session.getId()：当前session会话会自动生成一个id，从0开始累加的。
-         */
-        log.info("连接建立中 ==> session_id = {}， sid = {}", session.getId(), sid);
-        //加入 Map中。将页面的sid和session绑定或者session.getId()与session
-        //onlineSessionIdClientMap.put(session.getId(), session);
-        onlineSessionClientMap.put(sid, session);
-
-        //在线数加1
-        onlineSessionClientCount.incrementAndGet();
-        this.sid = sid;
+    public void onOpen(Session session) {
         this.session = session;
-        sendToOne(sid, "连接成功");
-        log.info("连接建立成功，当前在线数为：{} ==> 开始监听新连接：session_id = {}， sid = {},。", onlineSessionClientCount, session.getId(), sid);
+        webSocketSet.add(this);
+        log.info("【websocket消息】有新的连接, 总数:{}", webSocketSet.size());
     }
 
-    /**
-     * 连接关闭调用的方法。由前端<code>socket.close()</code>触发
-     *
-     * @param sid
-     * @param session
-     */
+    //前端关闭时一个websocket时
     @OnClose
-    public void onClose(@PathParam("sid") String sid, Session session) {
-        //onlineSessionIdClientMap.remove(session.getId());
-        // 从 Map中移除
-        onlineSessionClientMap.remove(sid);
-
-        //在线数减1
-        onlineSessionClientCount.decrementAndGet();
-        log.info("连接关闭成功，当前在线数为：{} ==> 关闭该连接信息：session_id = {}， sid = {},。", onlineSessionClientCount, session.getId(), sid);
+    public void onClose() {
+        webSocketSet.remove(this);
+        log.info("【websocket消息】连接断开, 总数:{}", webSocketSet.size());
     }
 
-    /**
-     * 收到客户端消息后调用的方法。由前端<code>socket.send</code>触发
-     * * 当服务端执行toSession.getAsyncRemote().sendText(xxx)后，前端的socket.onmessage得到监听。
-     *
-     * @param message
-     * @param session
-     */
+    //前端向后端发送消息
     @OnMessage
-    public void onMessage(String message, Session session) {
-        /**
-         * html界面传递来得数据格式，可以自定义.
-         * {"sid":"user-1","message":"hello websocket"}
-         */
-        JSONObject jsonObject = JSON.parseObject(message);
-        String toSid = jsonObject.getString("sid");
-        String msg = jsonObject.getString("message");
-        log.info("服务端收到客户端消息 ==> fromSid = {}, toSid = {}, message = {}", sid, toSid, message);
-
-        /**
-         * 模拟约定：如果未指定sid信息，则群发，否则就单独发送
-         */
-        if (toSid == null || toSid == "" || "".equalsIgnoreCase(toSid)) {
-            sendToAll(msg);
-        } else {
-            sendToOne(toSid, msg);
-        }
+    public void onMessage(String message) {
+        log.info("【websocket消息】收到客户端发来的消息:{}", message);
     }
 
-    /**
-     * 发生错误调用的方法
-     *
-     * @param session
-     * @param error
-     */
-    @OnError
-    public void onError(Session session, Throwable error) {
-        log.error("WebSocket发生错误，错误信息为：" + error.getMessage());
-        error.printStackTrace();
-    }
-
-    /**
-     * 群发消息
-     *
-     * @param message 消息
-     */
-    private void sendToAll(String message) {
-        // 遍历在线map集合
-        onlineSessionClientMap.forEach((onlineSid, toSession) -> {
-            // 排除掉自己
-            if (!sid.equalsIgnoreCase(onlineSid)) {
-                log.info("服务端给客户端群发消息 ==> sid = {}, toSid = {}, message = {}", sid, onlineSid, message);
-                toSession.getAsyncRemote().sendText(message);
+    //  try-catch 中的那一行是最重要的~
+    public void sendMessage(String message) {
+        for (WebSocketServer webSocketServer: webSocketSet) {
+            log.info("【websocket消息】广播消息, message={}", message);
+            try {
+                webSocketServer.session.getBasicRemote().sendText(JSON.toJSONString(new TestPojo("tom", 72)));
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        });
-    }
-
-    /**
-     * 指定发送消息
-     *
-     * @param toSid
-     * @param message
-     */
-    private void sendToOne(String toSid, String message) {
-        // 通过sid查询map中是否存在
-        Session toSession = onlineSessionClientMap.get(toSid);
-        if (toSession == null) {
-            log.error("服务端给客户端发送消息 ==> toSid = {} 不存在, message = {}", toSid, message);
-            return;
         }
-        // 异步发送
-        log.info("服务端给客户端发送消息 ==> toSid = {}, message = {}", toSid, message);
-        toSession.getAsyncRemote().sendText(message);
-
-
-        /*
-        // 同步发送
-        try {
-            toSession.getBasicRemote().sendText(message);
-        } catch (IOException e) {
-            log.error("发送消息失败，WebSocket IO异常");
-            e.printStackTrace();
-        }*/
     }
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

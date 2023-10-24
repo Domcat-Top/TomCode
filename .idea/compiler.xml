@@ -30,6 +30,7 @@
       <module name="RepTileTest" target="1.8" />
       <module name="ScheduledModule" target="1.8" />
       <module name="TestAop" target="1.8" />
+      <module name="TestExcel" target="1.8" />
       <module name="TestModule" target="1.8" />
       <module name="TestWebSocket" target="1.8" />
     </bytecodeTargetLevel>
@@ -45,6 +46,7 @@
       <module name="RepTileTest" options="-parameters" />
       <module name="ScheduledModule" options="-parameters" />
       <module name="TestAop" options="-parameters" />
+      <module name="TestExcel" options="-parameters" />
       <module name="TestModule" options="-parameters" />
       <module name="TestWebSocket" options="-parameters" />
     </option>
