@@ -54,8 +54,8 @@ public class WebSocketServer {
     //  try-catch 中的那一行是最重要的~
     public void sendMessage(String message) {
         for (WebSocketServer webSocketServer: webSocketSet) {
-            log.info("【websocket消息】广播消息, message={}", message);
             try {
+                log.info("【websocket消息】广播消息, message={}", message);
                 webSocketServer.session.getBasicRemote().sendText(JSON.toJSONString(new TestPojo("tom", 72)));
             } catch (Exception e) {
                 e.printStackTrace();

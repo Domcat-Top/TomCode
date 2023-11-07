@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -19,7 +20,7 @@ import java.util.List;
 @RestController
 public class BlogController {
 
-    @Autowired
+    @Resource
     private IBlogService iBlogService;
 
     // 测试接口通了没
@@ -49,7 +50,7 @@ public class BlogController {
         list.forEach((blog) -> {
             System.out.println(blog.getBlogName() + "*****");
         });
-        return null;
+        return list.size() + "";
     }
 }
 
