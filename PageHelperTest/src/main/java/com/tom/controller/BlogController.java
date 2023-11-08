@@ -31,7 +31,7 @@ public class BlogController {
 
         StringBuffer sb = new StringBuffer();
         list.forEach((blog) -> {
-            sb.append(blog.getId() + " ");
+            sb.append(blog.getId() + "-");
         });
         return sb.toString();
     }
