@@ -1,6 +1,5 @@
 package com.tom.testmodule.utils;
 
-
 import com.alibaba.fastjson2.JSONObject;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -39,7 +38,7 @@ public class TestUtils {
         StringBuffer sb = new StringBuffer();
         // 模拟客户端向对应网站发送数据
         Connection.Response response = Jsoup
-                // 网址
+                // 以百度新闻示例
                 .connect("https://news.baidu.com/")
                 // 请求头
                 .header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36")
@@ -49,16 +48,15 @@ public class TestUtils {
                 .timeout(10000)
                 // 执行
                 .execute();
-
-        // 从响应体中拿到html部分
+        // 从响应体中拿到 html
         String html = response.body();
         // Jsoup 解析HTML
         Document dom = Jsoup.parse(html);
         // 选择器
-        // # 为 id 选择器
-        sb.append("【Tomの早报】：" + getLocalDate() + "\n");
+        // id 选择器 进行定位
+        sb.append("【汤姆の早报】早上好！" + getLocalDate() + "\n");
         int sum = 1;
-        // 热点新闻
+        // 热门选择器
         Elements hotSelect = dom.select("#pane-news > div > ul > li > strong > a");
         for (Element element : hotSelect) {
             sb.append("\n");
@@ -67,8 +65,7 @@ public class TestUtils {
         }
         sb.append("\n");
         sb.append("--------------------" + "\n");
-
-        // 其他新闻
+        // 其他选择器
         sum = 1;
         Elements normalSelect = dom.select("#pane-news > ul > li > a");
         for (Element element : normalSelect) {
@@ -77,7 +74,7 @@ public class TestUtils {
             sum++;
         }
 
-        sb.append("\n" + "【Tomの随机鸡汤】" + getWord());
+        sb.append("\n"  + "【Tomの早报一言】" + getWord());
 
         return sb.toString();
     }
@@ -129,7 +126,7 @@ public class TestUtils {
                 break;
         }
         CalendarUtil calendarUtil = new CalendarUtil(calendar);
-        sb.append(calendarUtil.getDay());
+        sb.append( "农历" + calendarUtil.getDay());
 
         return sb.toString();
     }
@@ -143,11 +140,9 @@ public class TestUtils {
         try {
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-
             // 设置请求方法和请求头
             con.setRequestMethod("GET");
             con.setRequestProperty("User-Agent", "Mozilla/5.0");
-
             // 读取响应内容
             BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
             String inputLine;
@@ -158,15 +153,12 @@ public class TestUtils {
             in.close();
             JSONObject jsonObject = JSONObject.parseObject(content.toString());
             JSONObject data = jsonObject.getJSONObject("data");
-
             return data.getString("content") + "-- " + data.getString("name");
-
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
-
 }
 
 /**
@@ -233,8 +225,7 @@ class CalendarUtil {
     /**
      * 传回农历 year年的总天数
      *
-     * @param year
-     *            将要计算的年份
+     * @param year 将要计算的年份
      * @return 返回传入年份的总天数
      */
     private static int yearDays(int year) {
@@ -248,9 +239,7 @@ class CalendarUtil {
 
     /**
      * 传回农历 year年闰月的天数
-     *
-     * @param year
-     *            将要计算的年份
+     * @param year 将要计算的年份
      * @return 返回 农历 year年闰月的天数
      */
     private static int leapDays(int year) {
@@ -265,9 +254,7 @@ class CalendarUtil {
 
     /**
      * 传回农历 year年闰哪个月 1-12 , 没闰传回 0
-     *
-     * @param year
-     *            将要计算的年份
+     * @param year 将要计算的年份
      * @return 传回农历 year年闰哪个月 1-12 , 没闰传回 0
      */
     private static int leapMonth(int year) {
@@ -276,11 +263,8 @@ class CalendarUtil {
 
     /**
      * 传回农历 year年month月的总天数
-     *
-     * @param year
-     *            将要计算的年份
-     * @param month
-     *            将要计算的月份
+     * @param year 将要计算的年份
+     * @param month 将要计算的月份
      * @return 传回农历 year年month月的总天数
      */
     private static int monthDays(int year, int month) {

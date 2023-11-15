@@ -5,23 +5,6 @@ server:
 
 
 
-spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/myBlog?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&serverTimezone=GMT%2B8&useSSL=false
-    username: root
-    password: root
-
-mybatis-plus:
-  mapper-locations: classpath:mybatis/*.xml
-  configuration:
-    # 关闭驼峰和下划线互转
-    map-underscore-to-camel-case: false
-    #开启sql日志
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-
-
-
 
 
 
