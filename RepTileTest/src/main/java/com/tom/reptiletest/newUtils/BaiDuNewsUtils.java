@@ -1,6 +1,6 @@
-package com.tom.testmodule.utils;
+package com.tom.reptiletest.newUtils;
 
-import com.alibaba.fastjson2.JSONObject;
+import com.alibaba.fastjson.JSONObject;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -19,17 +19,15 @@ import java.util.Date;
 
 /**
  * @author: Tom
- * @date: 2023/11/9 12:39
+ * @date: 2023/11/16 15:21
  * @description:
  */
-public class TestUtils {
-
+public class BaiDuNewsUtils {
 
     public static void main(String[] args) throws Exception {
         String morningNews = getMorningNews();
         System.out.println(morningNews);
     }
-
     /**
      * 最后汇总，获取到今天的新闻
      * @return
@@ -160,6 +158,8 @@ public class TestUtils {
         return null;
     }
 }
+
+
 
 /**
  * 将当前日期转为农历日期：getDay()方法
@@ -376,16 +376,6 @@ class CalendarUtil {
                 + getChinaDayString(mLuchDay);
     }
 }
-
-
-
-
-
-
-
-
-
-
 
 
 
