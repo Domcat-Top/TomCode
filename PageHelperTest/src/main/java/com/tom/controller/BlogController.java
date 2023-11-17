@@ -45,7 +45,7 @@ public class BlogController {
         // 查询和增删改都不通用，涉及到事务相关的操作
         QueryWrapper<Blog> queryWrapper = new QueryWrapper();
         queryWrapper.orderByDesc("id");
-        PageHelper.startPage(1, 2);
+        PageHelper.startPage(1, 20);
         List<Blog> list = iBlogService.list(queryWrapper);
         list.forEach((blog) -> {
             System.out.println(blog.getBlogName() + "*****");
