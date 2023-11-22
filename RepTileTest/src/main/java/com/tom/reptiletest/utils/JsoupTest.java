@@ -12,7 +12,7 @@ import java.io.FileOutputStream;
 /**
  * @author: Tom
  * @date: 2023/7/14 14:10
- * @description:
+ * @description: 一个模板实例，指出了如何从网页爬取一些信息，但是当前这个网站已经关停了
  */
 public class JsoupTest {
 
