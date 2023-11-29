@@ -73,7 +73,7 @@ public class BaiDuNewsUtils {
             sum++;
         }
 
-        sb.append("\n"  + "【汤姆の早报一言】" + getWord());
+        sb.append("\n"  + "【汤姆の早报结束】");
 
         return sb.toString();
     }

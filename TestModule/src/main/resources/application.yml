@@ -1,14 +1,66 @@
 
 
 server:
-  port: 8989
+  port: 8888
 
 
 
 
 
+spring:
+  datasource:
+    #jdbc 基本通用配置
+    username: root
+    password: root
+    #高版本的 spring boot 搭配的 mysql 驱动版本通常也较高，如 mysql-connector-java:8.0.X
+    #此时 url 的值要带时区 serverTimezone、driver-class-name 的值要带 cj
+    url: jdbc:mysql://127.0.0.1:3306/myblog?characterEncoding=UTF-8&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    #切换 Druid 数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    #druid 数据源专有配置,对应的是 com.alibaba.druid.pool.DruidDataSource 中的属性
+    druid:
+      ########## 过滤器 ##########
+      #配置监控统计的内置过滤器：stat-监控统计(必须配置，否则监控不到sql)、wall-防御sql注入、log4j2-日志记录框架(值与应用中的日志框架保持一致，如 log4j、log4j、slf4j等等)
+      filters: stat,wall,log4j2
+      #自定义过滤器配置：stat、slf4j、log4j、log4j2、commons-log、wall
+      #内置Filter都是默认配置，无法满足需求时，则可以自定义 Filter，自定义的过滤器默认都是没有开启的。
+      filter:
+        stat: #状态监控过滤器
+          enabled: true
+          db-type: mysql
+          log-slow-sql: true  #开启慢sql监控，超过指定时间则认为是慢sql，记录到日志中
+          slow-sql-millis: 5000
+        slf4j: #日志监控过滤器，使用slf4j 进行日志输出
+          enabled: true
+          statement-log-error-enabled: true
+          statement-create-after-log-enabled: false
+          statement-close-after-log-enabled: false
+          result-set-open-after-log-enabled: false
+          result-set-close-after-log-enabled: false
+        wall: #防火墙过滤器
+          enabled: true
+          config:
+            delete-allow: false     #不允许删除数据
+            drop-table-allow: false #不允许删除表
 
+      ########## WebStatFilter：web 状态监控过滤器 ##########
+      web-stat-filter:
+        enabled: true
+        url-pattern: /*                 #过滤所有url
+        exclusions: "*.js,*.css,*.gif,*.jpg,*.png,*.ico,/druid/*"   # 排除一些不必要的url
+        session-stat-enable: true       #开启session统计功能
+        session-stat-max-count: 1000    #session的最大个数,默认100
 
+      ########## StatViewServlet(监控页面路径配置)，用于展示Druid的监控统计信息 ##########
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*           #访问内置监控页面的路径，内置监控页面的首页是 http://127.0.0.1:8080/druid/login.html 或者 /druid/index.html
+        reset-enable: false             #不允许清空统计数据,重新计算
+        login-username: root            #配置监控页面登陆用户
+        login-password: 123456          #配置监控页面登陆密码
+        allow: 127.0.0.1                #允许访问的地址,如果没有配置或者为空，则允许所有访问
+        deny:                           #拒绝访问的地址，deny优先于allow，如果在deny列表中，就算在allow列表中，也会被拒绝
 
 
 
