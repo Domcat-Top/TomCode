@@ -25,9 +25,11 @@ import java.util.Date;
 public class BaiDuNewsUtils {
 
     public static void main(String[] args) throws Exception {
-        String morningNews = getMorningNews();
 
+        String morningNews = getMorningNews();
         System.out.println(morningNews);
+        // 让控制台日志等下再打印，别出现在中间，影响观看
+        Thread.sleep(1);
     }
     /**
      * 最后汇总，获取到今天的新闻
