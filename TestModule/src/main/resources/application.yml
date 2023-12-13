@@ -3,8 +3,6 @@
 server:
   port: 8888
 
-
-
 spring:
   data:
     mongodb:
@@ -15,7 +13,6 @@ spring:
       password: jerry
       # 设置认证数据库，可以无
       authentication-database:
-      # 连接池配置，下一次的日报
       # 客户端标识---可以没有
       clientName: {spring.application.name}
       #TCP（socket）连接超时时间，毫秒
