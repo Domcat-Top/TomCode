@@ -31,6 +31,7 @@ public class BaiDuNewsUtils {
         // 让控制台日志等下再打印，别出现在中间，影响观看
         Thread.sleep(1);
     }
+
     /**
      * 最后汇总，获取到今天的新闻
      * @return
