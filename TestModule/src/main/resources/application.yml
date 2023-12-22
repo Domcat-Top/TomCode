@@ -4,45 +4,24 @@ server:
   port: 8888
 
 spring:
-  data:
-    mongodb:
-      # 多数据源连接简单写法
-      # uri: mongodb://user:password@ip1:port1,ip2:port2/database
-      database: TomTest
+  datasource:
+    druid:
+      url: jdbc:mysql://127.0.0.1:3306/test_quartz?characterEncoding=utf8&useSSL=false&autoReconnect=true&serverTimezone=UTC
       username: tom
-      password: jerry
-      # 设置认证数据库，可以无
-      authentication-database:
-      # 客户端标识---可以没有
-      clientName: {spring.application.name}
-      #TCP（socket）连接超时时间，毫秒
-      connectionTimeoutMs: 5000
-      #TCP（socket）连接闲置时间，毫秒
-      maxConnectionIdleTimeMs: 60000
-      #TCP（socket）连接最多可以使用多久，毫秒
-      maxConnectionLifeTimeMs: 300000
-      #TCP（socket）读取超时时间，毫秒
-      readTimeoutMs: 15000
-      #当连接池无可用连接时客户端阻塞等待的最大时长，毫秒
-      maxWaitTimeMs: 5000
-      #心跳检测发送频率，毫秒
-      heartbeatFrequencyMs: 20000
-      #最小的心跳检测发送频率，毫秒
-      minHeartbeatFrequencyMs: 8000
-      #心跳检测连接超时时间，毫秒
-      heartbeatConnectionTimeoutMs: 10000
-      #心跳检测读取超时时间，毫秒
-      heartbeatReadTimeoutMs: 15000
-      #线程池允许的最大连接数
-      connectionsPerHost: 100
-      # 线程池空闲时保持的最小连接数
-      minConnectionsPerHost: 20
-      # 计算允许多少个线程阻塞等待时的乘数，算法：threadsAllowedToBlockForConnectionMultiplier*maxConnectionsPerHost
-      threadsAllowedToBlockForConnectionMultiplier: 10
+      password: tom
+      driver-class-name: com.mysql.jdbc.Driver
+      db-type: com.alibaba.druid.pool.DruidDataSource
+      initial-size: 3
+      min-idle: 3
+      max-active: 10
+      max-wait: 60000
 
-
-
-
+mybatis:
+  mapper-locations: classpath:org/example/mapper/*.xml
+  configuration:
+    cache-enabled: true
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 
 
