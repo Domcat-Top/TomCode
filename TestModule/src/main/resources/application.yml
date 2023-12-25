@@ -3,25 +3,35 @@
 server:
   port: 8888
 
-spring:
-  datasource:
-    druid:
-      url: jdbc:mysql://127.0.0.1:3306/test_quartz?characterEncoding=utf8&useSSL=false&autoReconnect=true&serverTimezone=UTC
-      username: tom
-      password: tom
-      driver-class-name: com.mysql.jdbc.Driver
-      db-type: com.alibaba.druid.pool.DruidDataSource
-      initial-size: 3
-      min-idle: 3
-      max-active: 10
-      max-wait: 60000
+management:
+  endpoints:
+    web:
+      exposure:
+        # 开放所有的端点，但是不包含shutdown
+        # include: *
+        # 开放指定的端点，开启多个方式使用 ， 分割
+        include: beans, mappings
+        # 不开放某个端点
+        exclude: beans
+      # 防止恶意访问，可以更改basePath
+      base-path: /tom
+      path-mapping:
+        # 修改某个特定的端点的路径
+        beans: beansCheck
+  server:
+    # 隐藏端点的访问端口，防止恶意访问
+    port: 9999
+  # shutdown这个端点和其他的是分离开的
+  endpoint:
+    shutdown:
+      enabled: true
+    # 自动缓存不带参数的端点请求，可以设置缓存过期时间
+    beans:
+      cache:
+        time-to-live: 60s
 
-mybatis:
-  mapper-locations: classpath:org/example/mapper/*.xml
-  configuration:
-    cache-enabled: true
-    map-underscore-to-camel-case: true
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
 
 
 
